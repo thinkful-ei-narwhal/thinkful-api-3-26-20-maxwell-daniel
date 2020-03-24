@@ -1,5 +1,6 @@
-import store from "./store.js";
-import item from "./item.js";
+import $ from 'jquery';
+import store from "./store";
+import item from "./item";
 
 const generateItemElement = function(item) {
   let itemTitle = `<span class="shopping-item shopping-item__checked">${item.name}</span>`;
