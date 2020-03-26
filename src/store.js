@@ -7,10 +7,9 @@ function findById(id) {
   return this.items.find(item => item.id === id);
 }
 
-function addItem(itemName) {
+function addItem(item) {
   try {
-    item.validateName(itemName);
-    this.items.push(item.create(itemName));
+    this.items.push(item);
   } catch (error) {
     console.log(`Cannot add item: ${error.message}`);
   }
