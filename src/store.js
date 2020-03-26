@@ -4,7 +4,6 @@ const error = null;
 
 function setError(err) {
   this.error = err;
-  console.log(this.error);
 }
 
 function findById(id) {

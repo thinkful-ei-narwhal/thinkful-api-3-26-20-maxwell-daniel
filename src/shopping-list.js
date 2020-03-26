@@ -49,7 +49,6 @@ const handleErrorExitClick = function() {
 const errorRender = function() {
   if (store.error) {
     const errorString = generateErrorHTML(store.error);
-    console.log(errorString);
     // insert that HTML into the DOM
     $('.error-contain').html(errorString);
   } else {
@@ -162,6 +161,7 @@ const bindEventListeners = function() {
   handleDeleteItemClicked();
   handleEditShoppingItemSubmit();
   handleToggleFilterClick();
+  handleErrorExitClick();
 };
 
 // This object contains the only exposed methods from this module:
