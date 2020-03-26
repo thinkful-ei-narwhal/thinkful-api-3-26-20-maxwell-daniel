@@ -1,7 +1,6 @@
 import $ from 'jquery';
 import api from "./api";
 import store from "./store";
-import item from "./item";
 
 const generateItemElement = function(item) {
   let itemTitle = `<span class="shopping-item shopping-item__checked">${item.name}</span>`;
@@ -44,15 +43,6 @@ const render = function() {
   $(".js-shopping-list").html(shoppingListItemsString);
 };
 
-const addItemToShoppingList = function(itemName) {
-  try {
-    item.validateName(itemName);
-    store.items.push(item.create(itemName));
-  } catch (error) {
-    console.log(`Cannot add item: ${error.message}`);
-  }
-};
-
 const handleNewItemSubmit = function() {
   
   $("#js-shopping-list-form").submit(function(event) {
@@ -72,7 +62,6 @@ const handleNewItemSubmit = function() {
 const handleItemCheckClicked = function() {
   $(".js-shopping-list").on("click", ".js-item-toggle", event => {
     const id = getItemIdFromElement(event.currentTarget);
-    store.findAndToggleChecked(id);
     render();
   });
 };
@@ -117,7 +106,6 @@ const handleEditShoppingItemSubmit = function() {
     const itemName = $(event.currentTarget)
       .find(".shopping-item")
       .val();
-    store.findAndUpdateName(id, itemName);
     render();
   });
 };
