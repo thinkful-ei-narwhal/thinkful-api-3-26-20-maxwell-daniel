@@ -30,8 +30,16 @@ const createItem = function(name) {
   return fetch(`${BASE_URL}/items`, options);
 };
 
+const deleteItem = function(id) {
+  const options = {
+    method: 'DELETE',
+  };
+  return fetch(`${BASE_URL}/items/${id}`, options);
+};
+
 export default {
   getItems,
   createItem,
-  updateItem
+  updateItem,
+  deleteItem
 };

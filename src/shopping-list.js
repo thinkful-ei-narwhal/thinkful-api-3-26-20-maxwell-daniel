@@ -80,8 +80,11 @@ const handleDeleteItemClicked = function() {
   // like in `handleItemCheckClicked`, we use event delegation
   $(".js-shopping-list").on("click", ".js-item-delete", event => {
     const id = getItemIdFromElement(event.currentTarget);
-    store.findAndDelete(id);
-    render();
+    api.deleteItem(id)
+      .then(() => {
+        store.findAndDelete(id);
+        render();
+      });
   });
 };
 
