@@ -106,6 +106,11 @@ const handleEditShoppingItemSubmit = function() {
     const itemName = $(event.currentTarget)
       .find(".shopping-item")
       .val();
+      api.updateItem(id, {name:itemName})
+      .then(res => res.json())
+      .then(() => {
+      store.findAndUpdate(id, updatedItem);
+  });
     render();
   });
 };
