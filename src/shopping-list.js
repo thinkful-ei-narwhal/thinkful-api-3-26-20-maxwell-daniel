@@ -31,7 +31,34 @@ const generateShoppingItemsString = function(shoppingList) {
   return items.join("");
 };
 
+const generateErrorHTML = function(error) {
+  return `
+  <div class="error-box">
+    <button id="exit-err">X</button>
+    <h3>Error: ${error}</h3>
+  </div>`;
+};
+
+const handleErrorExitClick = function() {
+  $('.error-contain').on('click', '#exit-err', () => {
+    store.setError(null);
+    errorRender();
+  });
+};
+
+const errorRender = function() {
+  if (store.error) {
+    const errorString = generateErrorHTML(store.error);
+    console.log(errorString);
+    // insert that HTML into the DOM
+    $('.error-contain').html(errorString);
+  } else {
+    $('.error-contain').empty();
+  }
+};
+
 const render = function() {
+  errorRender();
   // Filter item list if store prop is true by item.checked === false
   let items = [...store.items];
   if (store.hideCheckedItems) {
@@ -44,15 +71,17 @@ const render = function() {
 };
 
 const handleNewItemSubmit = function() {
-  
   $("#js-shopping-list-form").submit(function(event) {
     event.preventDefault();
     const newItemName = $(".js-shopping-list-entry").val();
     $(".js-shopping-list-entry").val("");
     api.createItem(newItemName)
-      .then(res => res.json())
       .then((newItem) => {
         store.addItem(newItem);
+        render();
+      })
+      .catch((err) => {
+        store.setError(err.message);
         render();
       });
   });
@@ -65,6 +94,10 @@ const handleItemCheckClicked = function() {
     api.updateItem(id, { checked: !item.checked })
       .then(() => {
         store.findAndUpdate(id, { checked: !item.checked });
+        render();
+      })
+      .catch((err) => {
+        store.setError(err.message);
         render();
       });
   });
@@ -83,6 +116,10 @@ const handleDeleteItemClicked = function() {
     api.deleteItem(id)
       .then(() => {
         store.findAndDelete(id);
+        render();
+      })
+      .catch((err) => {
+        store.setError(err.message);
         render();
       });
   });
@@ -110,6 +147,10 @@ const handleEditShoppingItemSubmit = function() {
     api.updateItem(id, {name: itemName})
       .then(() => {
         store.findAndUpdate(id, {name: itemName});
+        render();
+      })
+      .catch((err) => {
+        store.setError(err.message);
         render();
       });
   });

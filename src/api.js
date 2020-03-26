@@ -1,9 +1,27 @@
 
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/max-daniel';
 
+const apiFetch = function(...args) {
+  let error;
+  return fetch(...args)
+    .then(res => {
+      if (!res.ok) {
+        error = { code: res.status};
+      }
+      return res.json();
+    })
+    .then(data => {
+      if (error) {
+        console.log(error);
+        error.message = data.message;
+        return Promise.reject(error);
+      }
+      return data;
+    });
+};
+
 const getItems = function() {
-  const options = {method: 'GET'}; 
-  return fetch(`${BASE_URL}/items`, options);
+  return apiFetch(`${BASE_URL}/items`);
 };
 
 const updateItem = function (id, updateData){
@@ -13,28 +31,25 @@ const updateItem = function (id, updateData){
     headers: {'Content-Type': 'application/json'},
     body: specialKeys
   };
-  return fetch(`${BASE_URL}/items/${id}`, options);
+  return apiFetch(`${BASE_URL}/items/${id}`, options);
 };
 
 const createItem = function(name) {
-  console.log(name);
   const newItem = JSON.stringify({name});
-  
-  console.log(newItem);
 
   const options = {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: newItem
   };
-  return fetch(`${BASE_URL}/items`, options);
+  return apiFetch(`${BASE_URL}/items`, options);
 };
 
 const deleteItem = function(id) {
   const options = {
     method: 'DELETE',
   };
-  return fetch(`${BASE_URL}/items/${id}`, options);
+  return apiFetch(`${BASE_URL}/items/${id}`, options);
 };
 
 export default {
