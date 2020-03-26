@@ -7,14 +7,14 @@ const getItems = function() {
 };
 
 const updateItem = function (id, updateData){
-  let specialKeys = JSON.stringify(updateData);
+  const specialKeys = JSON.stringify(updateData);
   const options = {
     method: 'PATCH',
     headers: {'Content-Type': 'application/json'},
     body: specialKeys
   };
-  return fetch(`${BASE_URL}/items/${id}`);
-}
+  return fetch(`${BASE_URL}/items/${id}`, options);
+};
 
 const createItem = function(name) {
   console.log(name);

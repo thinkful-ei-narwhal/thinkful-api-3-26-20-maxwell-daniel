@@ -61,7 +61,7 @@ const handleNewItemSubmit = function() {
 const handleItemCheckClicked = function() {
   $(".js-shopping-list").on("click", ".js-item-toggle", event => {
     const id = getItemIdFromElement(event.currentTarget);
-    const item = $(event.currentTarget).find('shopping-item').val();
+    const item =store.findById(id);
     api.updateItem(id, { checked: !item.checked })
       .then(() => {
         store.findAndUpdate(id, { checked: !item.checked });
@@ -107,8 +107,8 @@ const handleEditShoppingItemSubmit = function() {
     api.updateItem(id, {name: itemName})
       .then(() => {
         store.findAndUpdate(id, {name: itemName});
+        render();
       });
-    render();
   });
 };
 
