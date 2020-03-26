@@ -9,14 +9,8 @@ import "./index.css";
 
 const main = function() {
   api.getItems()
-  .then(res => console.log(res));
-
-  //fetching from thinkful
-  fetch('https://thinkful-list-api.herokuapp.com/ei-student/items')
   .then(res => res.json())
-  .then(data => console.log(data));
-
-
+  .then(responseJSONObj => console.log(responseJSONObj));
 
 
 

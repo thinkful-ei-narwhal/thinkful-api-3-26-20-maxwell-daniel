@@ -2,8 +2,11 @@
 const BASE_URL = 'https://thinkful-list-api.herokuapp.com/max-daniel';
 
 function getItems() {
-  return Promise.resolve('A successful response!');
+  const options = {method: 'GET'}; 
+  return fetch(`${BASE_URL}/items`, options);
 }
+
+
 
 export default {
   getItems
