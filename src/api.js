@@ -6,6 +6,16 @@ const getItems = function() {
   return fetch(`${BASE_URL}/items`, options);
 };
 
+const updateItem = function (id, updateData){
+  let specialKeys = JSON.stringify(updateData);
+  const options = {
+    method: 'PATCH',
+    headers: {'Content-Type': 'application/json'},
+    body: specialKeys
+  };
+  return fetch(`${BASE_URL}/items/${id}`);
+}
+
 const createItem = function(name) {
   console.log(name);
   const newItem = JSON.stringify({name});
@@ -22,5 +32,6 @@ const createItem = function(name) {
 
 export default {
   getItems,
-  createItem
+  createItem,
+  updateItem
 };
