@@ -55,14 +55,18 @@ const handleNewItemSubmit = function() {
         store.addItem(newItem);
         render();
       });
-    render();
   });
 };
 
 const handleItemCheckClicked = function() {
   $(".js-shopping-list").on("click", ".js-item-toggle", event => {
     const id = getItemIdFromElement(event.currentTarget);
-    render();
+    const item = $(event.currentTarget).find('shopping-item').val();
+    api.updateItem(id, { checked: !item.checked })
+      .then(() => {
+        store.findAndUpdate(id, { checked: !item.checked });
+        render();
+      });
   });
 };
 
@@ -81,12 +85,6 @@ const handleDeleteItemClicked = function() {
   });
 };
 
-/**
- * Toggles the store.hideCheckedItems property
- */
-const toggleCheckedItemsFilter = function() {
-  store.hideCheckedItems = !store.hideCheckedItems;
-};
 
 /**
  * Places an event listener on the checkbox
@@ -106,11 +104,10 @@ const handleEditShoppingItemSubmit = function() {
     const itemName = $(event.currentTarget)
       .find(".shopping-item")
       .val();
-      api.updateItem(id, {name:itemName})
-      .then(res => res.json())
+    api.updateItem(id, {name: itemName})
       .then(() => {
-      store.findAndUpdate(id, updatedItem);
-  });
+        store.findAndUpdate(id, {name: itemName});
+      });
     render();
   });
 };

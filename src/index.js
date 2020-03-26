@@ -16,13 +16,6 @@ const main = function() {
       shoppingList.render();
     });
 
-
-  // api.getItems()
-  //   .then(res => res.json())
-  //   .then(responseJSONObj => console.log(responseJSONObj));
-
-
-
   shoppingList.bindEventListeners();
   shoppingList.render();
 };

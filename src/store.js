@@ -34,7 +34,7 @@ export default {
   hideCheckedItems,
   findById,
   addItem,
-  findAndUpdate,
   findAndDelete,
-  toggleCheckedFilter
+  toggleCheckedFilter,
+  findAndUpdate,
 };
